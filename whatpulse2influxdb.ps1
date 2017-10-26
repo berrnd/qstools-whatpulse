@@ -65,12 +65,11 @@ foreach($row in $mouseClicksDataSet.Tables.Rows)
 	$timestamp = $timestamp.AddHours($row.hour)
 	$timestampNs = (DateTimeToInfluxDbTimestamp -date $timestamp)
 	$app = (InfluxDbEscapeTagValue -value $row.app)
-	$appPath = (InfluxDbEscapeTagValue -value $row.path)
 	$mouseButton = $row.button
 	$mouseClicksCount = $row.count
 
 	ShowProgress -actionType "mouseclicks" -destinationCount $mouseClicksDataSet.Tables.Rows.Count -currentCount $i
-	$data = "mouseclicks,host=$ENV:COMPUTERNAME,mouse_button=$mouseButton,app=$app,app_path=$appPath count=$mouseClicksCount $timestampNs"
+	$data = "mouseclicks,host=$ENV:COMPUTERNAME,mouse_button=$mouseButton,app=$app count=$mouseClicksCount $timestampNs"
 	InfluxDbWrite -data $data
 
 	$i++
@@ -84,12 +83,11 @@ foreach($row in $keyPressesDataSet.Tables.Rows)
 	$timestamp = $timestamp.AddHours($row.hour)
 	$timestampNs = (DateTimeToInfluxDbTimestamp -date $timestamp)
 	$app = (InfluxDbEscapeTagValue -value $row.app)
-	$appPath = (InfluxDbEscapeTagValue -value $row.path)
 	$key = $row.key
 	$keyPressesCount = $row.count
 
 	ShowProgress -actionType "keypresses" -destinationCount $keyPressesDataSet.Tables.Rows.Count -currentCount $i
-	$data = "keypresses,host=$ENV:COMPUTERNAME,key=$key,app=$app,app_path=$appPath count=$keyPressesCount $timestampNs"
+	$data = "keypresses,host=$ENV:COMPUTERNAME,key=$key,app=$app count=$keyPressesCount $timestampNs"
 	InfluxDbWrite -data $data
 
 	$i++
@@ -103,11 +101,10 @@ foreach($row in $appUsageDataSet.Tables.Rows)
 	$timestamp = $timestamp.AddHours($row.hour)
 	$timestampNs = (DateTimeToInfluxDbTimestamp -date $timestamp)
 	$app = (InfluxDbEscapeTagValue -value $row.app)
-	$appPath = (InfluxDbEscapeTagValue -value $row.path)
 	$secondsActive = $row.seconds_active
 
 	ShowProgress -actionType "appusage" -destinationCount $appUsageDataSet.Tables.Rows.Count -currentCount $i
-	$data = "appusage,host=$ENV:COMPUTERNAME,app=$app,app_path=$appPath seconds_active=$secondsActive $timestampNs"
+	$data = "appusage,host=$ENV:COMPUTERNAME,app=$app seconds_active=$secondsActive $timestampNs"
 	InfluxDbWrite -data $data
 
 	$i++
